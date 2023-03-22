@@ -57,7 +57,7 @@ jobs:
             cd terraform
             terraform init
             terraform plan -out sf.tfplan
-            terraform apply "sf.tfplan"
+            # terraform apply "sf.tfplan"
 
   deploy-sock-shop-app-and-nginx:
     machine:
