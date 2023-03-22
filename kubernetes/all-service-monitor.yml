@@ -1,0 +1,178 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: carts-monitoring
+  namespace: sock-shop
+  labels:
+    release: prometheus
+spec:
+  selector:
+    matchLabels:
+      name: carts
+  endpoints:
+    - interval: 5s
+      path: /metrics
+      port: "metrics"
+  namespaceSelector:
+    matchNames:
+      - "laravel"
+
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: catalogue-monitoring
+  namespace: sock-shop
+  labels:
+    release: prometheus
+spec:
+  selector:
+    matchLabels:
+      name: catalogue
+  endpoints:
+    - interval: 5s
+      path: /metrics
+      port: "metrics"
+  namespaceSelector:
+    matchNames:
+      - "laravel"
+
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: front-end-monitoring
+  namespace: sock-shop
+  labels:
+    release: prometheus
+spec:
+  selector:
+    matchLabels:
+      name: front-end
+  endpoints:
+    - interval: 5s
+      path: /metrics
+      port: "metrics"
+  namespaceSelector:
+    matchNames:
+      - "laravel"
+
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: orders-monitoring
+  namespace: sock-shop
+  labels:
+    release: prometheus
+spec:
+  selector:
+    matchLabels:
+      name: orders
+  endpoints:
+    - interval: 5s
+      path: /metrics
+      port: "metrics"
+  namespaceSelector:
+    matchNames:
+      - "laravel"
+
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: payment-monitoring
+  namespace: sock-shop
+  labels:
+    release: prometheus
+spec:
+  selector:
+    matchLabels:
+      name: payment
+  endpoints:
+    - interval: 5s
+      path: /metrics
+      port: "metrics"
+  namespaceSelector:
+    matchNames:
+      - "laravel"
+
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: queue-master-monitoring
+  namespace: sock-shop
+  labels:
+    release: prometheus
+spec:
+  selector:
+    matchLabels:
+      name: queue-master
+  endpoints:
+    - interval: 5s
+      path: /metrics
+      port: "metrics"
+  namespaceSelector:
+    matchNames:
+      - "laravel"
+
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: rabbitmq-monitoring
+  namespace: sock-shop
+  labels:
+    release: prometheus
+spec:
+  selector:
+    matchLabels:
+      name: rabbitmq
+  endpoints:
+    - interval: 5s
+      path: /metrics
+      port: "exporter"
+  namespaceSelector:
+    matchNames:
+      - "laravel"
+
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: shipping-monitoring
+  namespace: sock-shop
+  labels:
+    release: prometheus
+spec:
+  selector:
+    matchLabels:
+      name: shipping
+  endpoints:
+    - interval: 5s
+      path: /metrics
+      port: "metrics"
+  namespaceSelector:
+    matchNames:
+      - "laravel"
+
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: user-monitoring
+  namespace: sock-shop
+  labels:
+    release: prometheus
+spec:
+  selector:
+    matchLabels:
+      name: carts
+  endpoints:
+    - interval: 5s
+      path: /metrics
+      port: "metrics"
+  namespaceSelector:
+    matchNames:
+      - "laravel"

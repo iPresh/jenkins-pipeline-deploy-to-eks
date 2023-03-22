@@ -1,0 +1,108 @@
+version: 2.1
+orbs:
+  slack: circleci/slack@4.12.1
+  aws-cli: circleci/aws-cli@3.1.4
+
+commands:
+  install_terraform:
+    description: install Terraform
+    steps:
+      - run:
+          name: install terraform
+          command: |
+            wget -O- https://apt.releases.hashicorp.com/gpg | gpg --dearmor | sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg
+            echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+            sudo apt update && sudo apt install terraform
+
+  install_kubectl:
+    description: install kubectl for kubernetes
+    steps:
+      - run:
+          name: install kubectl
+          command: |
+            sudo apt-get update
+            sudo apt-get install -y ca-certificates curl
+            sudo apt-get install -y apt-transport-https
+            sudo curl -fsSLo /etc/apt/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
+            echo "deb [signed-by=/etc/apt/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
+            sudo apt-get update
+            sudo apt-get install -y kubectl
+            kubectl version --client --output=yaml
+
+  install_helm:
+    description: installing helm for kubernetes package manager
+    steps:
+      - run:
+          name: install helm
+          command: |
+            curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+            chmod 700 get_helm.sh
+            ./get_helm.sh
+
+            helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+            helm repo add stable https://charts.helm.sh/stable
+            helm repo add grafana https://grafana.github.io/helm-charts
+            helm repo update
+
+jobs:
+  create-eks-cluster:
+    docker:
+      - image: cimg/python:3.10
+    steps:
+      - checkout
+      - install_terraform
+      - run:
+          name: terraform create eks cluster
+          command: |
+            cd terraform
+            terraform init
+            terraform plan -out sf.tfplan
+            terraform apply "sf.tfplan"
+
+  deploy-sock-shop-app-and-nginx:
+    machine:
+      image: ubuntu-2204:2022.04.2
+    steps:
+      - checkout
+      - install_kubectl
+      - install_helm
+      - run:
+          name: update the local kubeconfig file
+          command: |
+            aws eks update-kubeconfig --name dev-eks-cluster --region us-east-1
+      - run:
+          name: deploy sock shop app
+          command: |
+            cd kubernetes
+            kubectl apply -f deployment.yml
+            kubectl apply -f nginx-deployment.yaml
+            kubectl apply -f nginx-service.yaml
+            kubectl apply -f all-service-monitor.yml
+            helm install loki grafana/loki-stack --namespace loki --create-namespace --set grafana.enabled=true --set loki.isDefault=false
+            kubectl get secret --namespace loki loki-grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
+
+
+  ingress-entry-point:
+    machine:
+      image: ubuntu-2204:2022.04.2
+    steps:
+      - checkout
+      - install_kubectl
+      - run:
+          name: update the local kubeconfig file
+          command: |
+            aws eks update-kubeconfig --name dev-eks-cluster --region us-east-1
+      - run:
+          name: creating all entry ingress
+          command: |
+            cd kubernetes
+            kubectl apply -f ingress.yml
+
+workflows:
+  dev-env:
+    jobs:
+      - create-eks-cluster:
+      - deploy-sock-shop-app-and-nginx:
+          requires: [create-eks-cluster]
+      - ingress-entry-point:
+          requires: [deploy-sock-shop-app-and-nginx]
