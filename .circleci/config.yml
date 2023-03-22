@@ -101,7 +101,7 @@ jobs:
 workflows:
   dev-env:
     jobs:
-      - create-eks-cluster:
+      - create-eks-cluster
       - deploy-sock-shop-app-and-nginx:
           requires: [create-eks-cluster]
       - ingress-entry-point:
