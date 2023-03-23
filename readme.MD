@@ -12,7 +12,7 @@
     http://loki-grafana.preciousamuh.me
 
 ### My log-in details:
-username: admin
+username: admin  
 password: 4vybTLFpkpDazMaZPv6ae8iqIEYrZmNhdiHjvOks
 
     
