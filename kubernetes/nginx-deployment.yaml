@@ -4,6 +4,7 @@ kind: Namespace
 metadata:
   name: nginx
 
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
