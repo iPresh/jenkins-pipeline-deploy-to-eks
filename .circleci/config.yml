@@ -78,7 +78,7 @@ jobs:
             kubectl apply -f nginx-deployment.yaml
             # kubectl apply -f nginx-service.yaml
             # kubectl apply -f all-service-monitor.yml
-            helm install loki grafana/loki-stack --namespace loki --create-namespace --set grafana.enabled=true --set loki.isDefault=false
+            # helm install loki grafana/loki-stack --namespace loki --create-namespace --set grafana.enabled=true --set loki.isDefault=false
             kubectl get secret --namespace loki loki-grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
 
 
