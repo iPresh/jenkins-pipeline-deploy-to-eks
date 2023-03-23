@@ -56,7 +56,7 @@ variable "eks_sg" {
 }
 
 variable "cluster_name" {
-  default = "dev-eks-cluster"
+  default = "presh-eks-cluster"
 }
 
 variable "eks_cidr_block" {
