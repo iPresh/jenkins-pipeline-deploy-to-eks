@@ -15,7 +15,7 @@
 username: admin
 password: 4vybTLFpkpDazMaZPv6ae8iqIEYrZmNhdiHjvOks
 
-
+    
 ### Here is an image showing my CI/CD pipleline deployment to Amazon EKS using circle-ci
 ![my-image](./images/circle-ci.PNG)
 
