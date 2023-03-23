@@ -19,11 +19,11 @@ password: 4vybTLFpkpDazMaZPv6ae8iqIEYrZmNhdiHjvOks
 ### Here is an image showing my CI/CD pipleline deployment to Amazon EKS using circle-ci
 ![my-image](./images/circle-ci.PNG)
 
-### My nginx webserver after deployment
-![my-nginx-web](./images/nginx.PNG)
-
 ### My sock-shop application after deployment
 ![my-socks-web](./images/socks-app.PNG)
+
+### My nginx webserver after deployment
+![my-nginx-web](./images/nginx.PNG)
 
 ### My loki-grafana
 ![my-grafana](./images/loki-grafana.PNG)
