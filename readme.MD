@@ -11,7 +11,7 @@
 
 ## Loki-grafana url:
 
-    http://loki-grafana.preciousamuh.me
+    loki-grafana.preciousamuh.me
 
 ### My log-in details:
 username: admin  
@@ -40,4 +40,7 @@ My nodes:
 ![my-nodes](./images/nodegroups.PNG)  
 
 My pods:  
-![my-grafana](./images/pods.PNG)
+![my-grafana](./images/pods.PNG)  
+
+Route53 hosted zone:
+![my-hosted-zone](./images/route53.PNG)  
