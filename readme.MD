@@ -27,3 +27,15 @@ password: 4vybTLFpkpDazMaZPv6ae8iqIEYrZmNhdiHjvOks
 
 ### My loki-grafana
 ![my-grafana](./images/loki-grafana.PNG)
+
+
+### Proof of work
+
+My cluster:  
+![my-cluster](./images/cluster1.PNG)  
+
+My nodes:  
+![my-nodes](./images/nodegroups.PNG)  
+
+My pods:  
+![my-grafana](./images/pods.PNG)
