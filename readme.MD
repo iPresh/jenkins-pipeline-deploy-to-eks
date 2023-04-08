@@ -1,5 +1,3 @@
-#### P.S: This repo is named "jenkins-pipeline.." because I did the task first with jenkins before using circle-ci
-
 # The following are my URL links:
 ## sock-shop app url: 
 
